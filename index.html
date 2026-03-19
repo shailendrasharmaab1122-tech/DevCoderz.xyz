@@ -14,13 +14,11 @@
             --bg-secondary: #1e293b;
             --text-primary: #f8fafc;
             --accent: #8b5cf6;
-            --success: #10b981;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: var(--bg-primary); color: var(--text-primary); overflow: hidden; height: 100vh; }
 
-        /* Custom Header */
         .header {
             height: 65px;
             background: var(--bg-secondary);
@@ -41,9 +39,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .menu-btn { font-size: 20px; cursor: pointer; color: var(--accent); }
-
-        /* Sidebar */
         .sidebar {
             position: fixed;
             left: -320px;
@@ -67,15 +62,13 @@
             align-items: center;
             gap: 12px;
             border: 1px solid transparent;
-            transition: 0.3s;
         }
-        .nav-item:hover { border-color: var(--accent); background: #1e293b; }
 
-        /* Main Viewport Logic */
+        /* --- IFRAME TRIMMING LOGIC --- */
         .main-container {
             width: 100%;
             height: calc(100vh - 65px);
-            overflow: hidden; 
+            overflow: hidden; /* Bahar ka sab cut jayega */
             position: relative;
             background: #fff;
         }
@@ -83,29 +76,32 @@
         iframe {
             width: 100%;
             border: none;
-            /* Header Hide Logic */
-            margin-top: -68px; 
-            /* Footer Hide Logic: Stretch height to push credits out of container */
-            height: calc(100% + 150px); 
-            background: white;
+            margin-top: -68px; /* Header gayab */
+            
+            /* Footer ko kaatne ke liye height adjust ki hai */
+            /* -250px karne se niche ka bada footer screen ke bahar chala jayega */
+            height: calc(100% + 68px); 
+            
+            /* Scrolling smooth rakhne ke liye */
+            overflow-y: auto;
         }
 
-        /* Credits Overlay - To cover original site's footer */
+        /* Bottom Guard - Ye original credits ko block karega */
         .footer-mask {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 45px;
+            height: 50px; /* Thoda bada mask */
             background: var(--bg-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-top: 1px solid var(--accent);
-            z-index: 10;
+            border-top: 2px solid var(--accent);
+            z-index: 100;
         }
 
-        .footer-text { font-size: 12px; color: #94a3b8; }
+        .footer-text { font-size: 13px; color: #cbd5e1; font-weight: 600; }
         .footer-text b { color: var(--accent); }
 
         .live-clock {
@@ -120,30 +116,18 @@
 <body>
 
     <div class="sidebar" id="sidebar">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-            <h2 style="font-size: 20px;">Portal Menu</h2>
-            <i class="fas fa-times" onclick="toggleSidebar()" style="cursor:pointer;"></i>
-        </div>
-
+        <h2 style="margin-bottom:20px;">DevCoderZ Menu</h2>
         <div class="nav-item" onclick="loadBatch('https://eduvibe-nt.pages.dev/')">
-            <i class="fas fa-book-reader"></i> 
-            <span>Main Study Material</span>
+            <i class="fas fa-play"></i> <span>Refresh Content</span>
         </div>
-
-        <div class="nav-item" onclick="window.open('https://t.me/DevCoderz', '_blank')">
-            <i class="fab fa-telegram"></i> 
-            <span>Official Telegram</span>
-        </div>
-
-        <div style="position: absolute; bottom: 80px; left: 20px; font-size: 11px; color: #64748b;">
-            System Status: <span style="color:var(--success)">Online</span><br>
-            Powered by <b>DevCoderZ</b>
+        <div class="nav-item" onclick="toggleSidebar()">
+            <i class="fas fa-times"></i> <span>Close</span>
         </div>
     </div>
 
     <header class="header">
         <div style="display: flex; align-items: center; gap: 15px;">
-            <i class="fas fa-bars menu-btn" onclick="toggleSidebar()"></i>
+            <i class="fas fa-bars" style="color:var(--accent); cursor:pointer;" onclick="toggleSidebar()"></i>
             <span class="brand-text">DevCoderZ</span>
         </div>
         <div class="live-clock" id="clock">00:00:00</div>
@@ -153,20 +137,13 @@
         <iframe src="https://eduvibe-nt.pages.dev/" id="mainFrame"></iframe>
 
         <div class="footer-mask">
-            <div class="footer-text">© 2026 Developed by <b>DevCoderZ</b></div>
+            <div class="footer-text">Powered by <b>DevCoderZ Engine</b></div>
         </div>
     </main>
 
     <script>
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
-
-        function loadBatch(url) {
-            document.getElementById('mainFrame').src = url;
-            toggleSidebar();
-        }
-
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        function loadBatch(url) { document.getElementById('mainFrame').src = url; toggleSidebar(); }
         setInterval(() => {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString();
