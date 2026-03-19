@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DevCoderZ - Your Study Hub</title>
+    <title>DevCoderZ | Premium Study Hub</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,65 +13,59 @@
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
             --text-primary: #f8fafc;
-            --accent-primary: #8b5cf6; /* Purple Theme */
+            --text-secondary: #94a3b8;
+            --accent-primary: #8b5cf6;
             --accent-secondary: #10b981;
-            --shadow: rgba(0, 0, 0, 0.4);
+            --shadow: rgba(0, 0, 0, 0.5);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        body { background: var(--bg-primary); color: var(--text-primary); overflow: hidden; height: 100vh; }
+        body { 
+            background: var(--bg-primary); 
+            color: var(--text-primary); 
+            overflow: hidden; 
+            height: 100vh; 
+            width: 100vw;
+        }
 
-        /* Custom Header */
+        /* Header Styling */
         .header {
-            height: 70px;
+            height: 65px;
             background: var(--bg-secondary);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
             border-bottom: 2px solid var(--accent-primary);
-            z-index: 1000;
             position: relative;
+            z-index: 1000;
+            box-shadow: 0 4px 15px var(--shadow);
         }
 
         .brand-text {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
-            background: linear-gradient(45deg, #8b5cf6, #d8b4fe);
+            background: linear-gradient(45deg, #a78bfa, #34d399);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
         }
 
-        /* Iframe Control */
-        .main-container {
-            width: 100%;
-            height: calc(100vh - 70px);
-            overflow: hidden;
-            position: relative;
-            background: #fff; /* Most study sites have white BG */
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            /* Trimming logic for hiding external headers */
-            margin-top: -65px; 
-            height: calc(100% + 65px);
-        }
+        .menu-btn { font-size: 20px; cursor: pointer; color: var(--accent-primary); transition: 0.3s; }
+        .menu-btn:hover { transform: scale(1.1); }
 
         /* Sidebar Styling */
         .sidebar {
             position: fixed;
-            left: -300px;
+            left: -320px;
             width: 300px;
             height: 100%;
             background: var(--bg-secondary);
-            transition: 0.3s;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 2000;
-            padding: 20px;
-            box-shadow: 5px 0 15px var(--shadow);
+            padding: 30px 20px;
+            box-shadow: 10px 0 30px var(--shadow);
         }
 
         .sidebar.active { left: 0; }
@@ -79,33 +73,93 @@
         .nav-item {
             padding: 15px;
             background: var(--bg-primary);
-            margin-bottom: 10px;
-            border-radius: 8px;
+            margin-bottom: 12px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            border: 1px solid transparent;
         }
 
-        .nav-item:hover { border-left: 4px solid var(--accent-primary); }
+        .nav-item:hover { 
+            border-color: var(--accent-primary);
+            background: #1e293b;
+        }
 
-        .menu-btn { font-size: 20px; cursor: pointer; color: var(--accent-primary); }
+        .nav-item i { color: var(--accent-primary); }
+
+        /* Main Viewport Clipping Logic */
+        .main-container {
+            width: 100%;
+            height: calc(100vh - 65px);
+            overflow: hidden; /* Important: Ye extra content kaat dega */
+            position: relative;
+            background: #fff;
+        }
+
+        iframe {
+            width: 100%;
+            border: none;
+            /* Header Hide: Top margin negative */
+            margin-top: -68px; 
+            /* Footer Hide: Height itni ki bottom content container ke bahar nikal jaye */
+            height: calc(100% + 140px); 
+            background: white;
+        }
+
+        /* DevCoderZ Footer Overlay (Original Credits Chhupane Ke Liye) */
+        .footer-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid var(--accent-primary);
+            z-index: 10;
+        }
+
+        .footer-text { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+        .footer-text b { color: var(--accent-primary); }
+
+        .live-clock {
+            font-family: monospace;
+            background: var(--bg-primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid var(--accent-primary);
+        }
+
     </style>
 </head>
 <body>
 
     <div class="sidebar" id="sidebar">
-        <h2 style="margin-bottom: 20px;">Study Batches</h2>
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h2 style="font-size: 20px;">Study Portal</h2>
+            <i class="fas fa-times" onclick="toggleSidebar()" style="cursor:pointer; color: var(--accent-danger);"></i>
+        </div>
+
         <div class="nav-item" onclick="loadBatch('https://eduvibe-nt.vercel.app')">
-            <i class="fas fa-book"></i> Main Batch
+            <i class="fas fa-graduation-cap"></i> 
+            <span>Main Study Batch</span>
         </div>
-        <div class="nav-item" onclick="toggleSidebar()">
-            <i class="fas fa-times"></i> Close Menu
+
+        <div class="nav-item" onclick="window.open('https://t.me/DevCoderz', '_blank')">
+            <i class="fab fa-telegram"></i> 
+            <span>Join Telegram</span>
         </div>
-        <p style="position: absolute; bottom: 80px; font-size: 12px; color: #64748b;">
-            Powerd by <b>DevCoderZ</b>
-        </p>
+
+        <div style="position: absolute; bottom: 100px; left: 20px;">
+            <p style="font-size: 11px; color: var(--text-secondary);">User ID: Student_2026</p>
+            <p style="font-size: 11px; color: var(--text-secondary);">System: <b>DevCoderZ Engine</b></p>
+        </div>
     </div>
 
     <header class="header">
@@ -117,7 +171,11 @@
     </header>
 
     <main class="main-container">
-        <iframe src="https://eduvibe-nt.pages.dev/" id="mainFrame"></iframe>
+        <iframe src="https://eduvibe-nt.vercel.app" id="mainFrame"></iframe>
+
+        <div class="footer-overlay">
+            <div class="footer-text">Developed & Maintained by <b>DevCoderZ</b></div>
+        </div>
     </main>
 
     <script>
