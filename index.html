@@ -5,94 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DevCoderZ | Premium Hub</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Space+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --accent: #8b5cf6;
-            --white: #ffffff;
-            --tg-blue: #24A1DE;
+            /* NEW Blue-Black Theme Palette */
+            --bg-deep: #020617;       /* Super Dark Blue-Black */
+            --bg-surface: #0f172a;    /* Dark Blue Surface */
+            --text-main: #f1f5f9;     /* Off-White Text */
+            --neon-blue: #38bdf8;     /* Bright Neon Blue Accent */
+            --neon-glow: rgba(56, 189, 248, 0.3);
+            --tg-blue: #0088cc;
+            --font-main: 'Poppins', sans-serif;
+            --font-mono: 'Space Mono', monospace;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg-primary); overflow: hidden; height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        body { background: var(--bg-deep); overflow: hidden; height: 100vh; color: var(--text-main); }
 
-        /* --- Welcome Popup Style --- */
+        /* --- NEW Modern Popup Design (Sliding Panel) --- */
         #welcomePopup {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex; align-items: center; justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex; align-items: flex-start; justify-content: center;
             z-index: 9999;
+            padding-top: 50px;
         }
         .popup-content {
-            background: var(--bg-secondary);
-            width: 90%; max-width: 400px;
-            padding: 30px; border-radius: 20px;
-            border: 2px solid var(--accent);
-            text-align: center; position: relative;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            animation: slideUp 0.4s ease-out;
+            background: var(--bg-surface);
+            width: 90%; max-width: 450px;
+            padding: 40px; border-radius: 12px; /* Smoother corner */
+            border-top: 4px solid var(--neon-blue); /* Distinctive top border */
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            animation: slideDown 0.5s ease-out;
         }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideDown { from { transform: translateY(-100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         
+        /* Modernized close button placement */
         .close-popup {
-            position: absolute; top: 15px; right: 15px;
-            font-size: 20px; color: #94a3b8; cursor: pointer;
+            position: absolute; top: -15px; right: -15px;
+            font-size: 20px; color: var(--bg-deep);
+            background: var(--text-main);
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
-        .popup-icon { font-size: 50px; color: var(--accent); margin-bottom: 15px; }
-        .popup-title { font-size: 24px; font-weight: 800; color: var(--white); margin-bottom: 10px; }
-        .popup-benefits { text-align: left; margin: 20px 0; color: #cbd5e1; font-size: 14px; }
-        .benefit-item { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        .benefit-item i { color: #10b981; }
+        
+        .popup-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .popup-icon { font-size: 40px; color: var(--neon-blue); }
+        .popup-title { font-size: 22px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+        
+        .benefit-list { list-style: none; margin-bottom: 30px; border-left: 2px solid #1e293b; padding-left: 15px; }
+        .benefit-item { margin-bottom: 12px; font-size: 14px; color: #cbd5e1; display: flex; align-items: center; gap: 10px; }
+        .benefit-item i { color: var(--neon-blue); font-size: 12px; }
 
         .popup-btn {
-            display: block; width: 100%; padding: 12px;
+            display: block; width: 100%; padding: 14px;
             background: var(--tg-blue); color: white;
-            text-decoration: none; border-radius: 10px;
-            font-weight: 600; margin-bottom: 10px;
+            text-decoration: none; border-radius: 8px;
+            font-weight: 600; text-align: center; font-size: 15px;
+            margin-bottom: 15px;
+            transition: 0.2s;
         }
-        .skip-btn { color: #94a3b8; font-size: 12px; cursor: pointer; text-decoration: underline; }
+        .popup-btn:hover { background: #00aaff; }
+        .skip-btn { display: block; text-align: center; color: #94a3b8; font-size: 12px; cursor: pointer; text-decoration: none; }
 
-        /* --- Main UI Styles --- */
+        /* --- REDESIGNED Main UI (Non-Copycat) --- */
         .header {
-            height: 60px; background: var(--bg-secondary);
+            height: 60px; background: var(--bg-surface);
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 15px; border-bottom: 2px solid var(--accent);
+            padding: 0 15px;
+            border-bottom: 1px solid #1e293b; /* Subtle border, not accent */
             z-index: 1000; position: relative;
         }
-        .brand-text {
-            font-size: 20px; font-weight: 800;
-            background: linear-gradient(45deg, #a78bfa, #34d399);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .live-timer { font-family: 'Courier New', monospace; font-size: 16px; color: var(--white); }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .menu-btn { font-size: 18px; color: #94a3b8; cursor: pointer; }
 
+        /* Brand Redesign (Glow Effect) */
+        .brand-text {
+            font-size: 18px; font-weight: 800;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-glow);
+            letter-spacing: -0.5px;
+            font-family: var(--font-mono); /* Monospace brand for geek feel */
+        }
+        .timer-wrap { display: flex; align-items: center; gap: 8px; color: #64748b; font-size: 13px; }
+        .live-timer { font-family: var(--font-mono); color: var(--text-main); font-weight: 600; }
+
+        /* Iframe Logic (Hard Clipping Footer) */
         .main-container { width: 100%; height: calc(100vh - 60px); overflow: hidden; position: relative; background: #fff; }
         iframe { width: 100%; border: none; margin-top: -68px; height: calc(100% + 500px); display: block; }
 
+        /* Redesigned DevCoderZ Bottom Strip */
         .footer-mask {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 55px;
-            background: var(--bg-secondary); display: flex; align-items: center;
-            justify-content: center; border-top: 2px solid var(--accent); z-index: 999;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 50px;
+            background: var(--bg-surface); display: flex; align-items: center;
+            justify-content: center;
+            border-top: 1px solid #1e293b;
+            z-index: 999;
         }
-        .footer-text { font-size: 13px; color: #cbd5e1; font-weight: 600; }
+        .footer-text { font-size: 12px; color: #94a3b8; font-weight: 600; font-family: var(--font-mono); }
 
+        /* Sidebar Redesign */
         .sidebar {
             position: fixed; left: -320px; width: 280px; height: 100%;
-            background: var(--bg-secondary); transition: 0.3s;
-            z-index: 2000; padding: 20px;
+            background: var(--bg-deep); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2000; padding: 30px 20px;
+            box-shadow: 10px 0 40px rgba(0,0,0,0.8);
         }
         .sidebar.active { left: 0; }
+        
+        .sidebar-brand { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 40px; font-family: var(--font-mono); text-shadow: 0 0 5px var(--neon-glow); }
+
         .nav-item {
-            padding: 14px; background: var(--bg-primary); margin-bottom: 12px;
-            border-radius: 10px; cursor: pointer; display: flex; align-items: center;
-            gap: 12px; color: white; text-decoration: none;
+            padding: 14px; background: rgba(255,255,255,0.03); margin-bottom: 12px;
+            border-radius: 8px; cursor: pointer; display: flex; align-items: center;
+            gap: 12px; color: #94a3b8; text-decoration: none;
+            border: 1px solid transparent;
+            transition: 0.2s;
         }
+        .nav-item:hover { border-color: rgba(56, 189, 248, 0.2); background: rgba(56, 189, 248, 0.05); color: #fff; }
+        .nav-item i { font-size: 16px; color: var(--neon-blue); }
+        .tg-item { border-color: var(--tg-blue) !important; color: #fff !important; }
     </style>
 </head>
 <body>
@@ -100,45 +139,58 @@
     <div id="welcomePopup">
         <div class="popup-content">
             <i class="fas fa-times close-popup" onclick="closePopup()"></i>
-            <div class="popup-icon"><i class="fas fa-rocket"></i></div>
-            <div class="popup-title">Welcome to DevCoderZ</div>
-            <p style="color: #94a3b8; font-size: 13px;">Experience the most powerful study portal</p>
             
-            <div class="popup-benefits">
-                <div class="benefit-item"><i class="fas fa-check-circle"></i> No Header/Footer Ads</div>
-                <div class="benefit-item"><i class="fas fa-check-circle"></i> Fast & Lag-Free Interface</div>
-                <div class="benefit-item"><i class="fas fa-check-circle"></i> Premium Content Access</div>
-                <div class="benefit-item"><i class="fas fa-check-circle"></i> Live 24/7 Support</div>
+            <div class="popup-header">
+                <div class="popup-icon"><i class="fas fa-satellite"></i></div>
+                <div class="popup-title">DevCoderZ Engine 2.0</div>
             </div>
+            
+            <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">Your secure, ad-free access point to academic materials.</p>
+            
+            <ul class="benefit-list">
+                <li class="benefit-item"><i class="fas fa-shield-alt"></i> Sandboxed Environment (Ad Block)</li>
+                <li class="benefit-item"><i class="fas fa-bolt"></i> Low-Latency Data Stream</li>
+                <li class="benefit-item"><i class="fas fa-lock"></i> Direct Telegram Access</li>
+                <li class="benefit-item"><i class="fas fa-broadcast-tower"></i> 24/7 Server Status</li>
+            </ul>
 
             <a href="https://t.me/+8tZSJ5FyTXVjM2M1" target="_blank" class="popup-btn">
-                <i class="fab fa-telegram-plane"></i> Join Telegram Channel
+                <i class="fab fa-telegram-plane"></i> Initialize TG Link
             </a>
-            <div class="skip-btn" onclick="closePopup()">Skip to Portal</div>
+            <div class="skip-btn" onclick="closePopup()">Bypass & Continue</div>
         </div>
     </div>
 
     <div class="sidebar" id="sidebar">
-        <h3 style="margin-bottom:25px; color:var(--accent);">DevCoderZ Portal</h3>
-        <div class="nav-item" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Refresh</div>
-        <a href="https://t.me/+8tZSJ5FyTXVjM2M1" target="_blank" class="nav-item" style="color:var(--tg-blue);">
-            <i class="fab fa-telegram-plane"></i> Telegram Channel
+        <div class="sidebar-brand">// DEVCODERZ.CORE</div>
+        
+        <div class="nav-item" onclick="location.reload()"><i class="fas fa-terminal"></i> <span>Reset Session</span></div>
+        
+        <a href="https://t.me/+8tZSJ5FyTXVjM2M1" target="_blank" class="nav-item tg-item">
+            <i class="fab fa-telegram-plane"></i> <span>TG Channel [Link]</span>
         </a>
-        <div class="nav-item" onclick="toggleSidebar()" style="margin-top:20px; color:#ef4444;"><i class="fas fa-times"></i> Close</div>
+        
+        <div class="nav-item" onclick="toggleSidebar()" style="margin-top:30px; color:#ef4444; background: rgba(239, 68, 68, 0.05);">
+            <i class="fas fa-power-off"></i> <span>Terminate Menu</span>
+        </div>
     </div>
 
     <header class="header">
-        <div style="display: flex; align-items: center; gap: 12px;">
-            <i class="fas fa-bars" style="color:var(--accent); cursor:pointer; font-size:20px;" onclick="toggleSidebar()"></i>
-            <span class="brand-text">DevCoderZ</span>
+        <div class="header-left">
+            <i class="fas fa-th-large menu-btn" onclick="toggleSidebar()"></i>
+            <span class="brand-text">&lt;DevCoderZ/&gt;</span>
         </div>
-        <div class="live-timer" id="clock">00:00:00</div>
+        <div class="timer-wrap">
+            <i class="fas fa-history"></i>
+            <div class="live-timer" id="clock">00:00:00 AM</div>
+        </div>
     </header>
 
     <main class="main-container">
         <iframe src="https://eduvibe-nt.pages.dev/" id="mainFrame"></iframe>
+        
         <div class="footer-mask">
-            <div class="footer-text">© 2026 Developed by <b>DevCoderZ</b></div>
+            <div class="footer-text">[ DevCoderZ Portal © 2026 ]</div>
         </div>
     </main>
 
@@ -146,7 +198,7 @@
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
         function closePopup() { document.getElementById('welcomePopup').style.display = 'none'; }
 
-        // Live Clock
+        // Live Clock (AM/PM Format)
         setInterval(() => {
             const now = new Date();
             let h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
