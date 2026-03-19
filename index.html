@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DevCoderZ | Premium Study Hub</title>
+    <title>DevCoderZ | Premium Hub</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -13,23 +13,14 @@
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
             --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-primary: #8b5cf6;
-            --accent-secondary: #10b981;
-            --shadow: rgba(0, 0, 0, 0.5);
+            --accent: #8b5cf6;
+            --success: #10b981;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        
-        body { 
-            background: var(--bg-primary); 
-            color: var(--text-primary); 
-            overflow: hidden; 
-            height: 100vh; 
-            width: 100vw;
-        }
+        body { background: var(--bg-primary); color: var(--text-primary); overflow: hidden; height: 100vh; }
 
-        /* Header Styling */
+        /* Custom Header */
         .header {
             height: 65px;
             background: var(--bg-secondary);
@@ -37,10 +28,9 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
-            border-bottom: 2px solid var(--accent-primary);
-            position: relative;
+            border-bottom: 2px solid var(--accent);
             z-index: 1000;
-            box-shadow: 0 4px 15px var(--shadow);
+            position: relative;
         }
 
         .brand-text {
@@ -49,13 +39,11 @@
             background: linear-gradient(45deg, #a78bfa, #34d399);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 0.5px;
         }
 
-        .menu-btn { font-size: 20px; cursor: pointer; color: var(--accent-primary); transition: 0.3s; }
-        .menu-btn:hover { transform: scale(1.1); }
+        .menu-btn { font-size: 20px; cursor: pointer; color: var(--accent); }
 
-        /* Sidebar Styling */
+        /* Sidebar */
         .sidebar {
             position: fixed;
             left: -320px;
@@ -65,9 +53,8 @@
             transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 2000;
             padding: 30px 20px;
-            box-shadow: 10px 0 30px var(--shadow);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
         }
-
         .sidebar.active { left: 0; }
 
         .nav-item {
@@ -76,25 +63,19 @@
             margin-bottom: 12px;
             border-radius: 12px;
             cursor: pointer;
-            transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 12px;
             border: 1px solid transparent;
+            transition: 0.3s;
         }
+        .nav-item:hover { border-color: var(--accent); background: #1e293b; }
 
-        .nav-item:hover { 
-            border-color: var(--accent-primary);
-            background: #1e293b;
-        }
-
-        .nav-item i { color: var(--accent-primary); }
-
-        /* Main Viewport Clipping Logic */
+        /* Main Viewport Logic */
         .main-container {
             width: 100%;
             height: calc(100vh - 65px);
-            overflow: hidden; /* Important: Ye extra content kaat dega */
+            overflow: hidden; 
             position: relative;
             background: #fff;
         }
@@ -102,15 +83,15 @@
         iframe {
             width: 100%;
             border: none;
-            /* Header Hide: Top margin negative */
+            /* Header Hide Logic */
             margin-top: -68px; 
-            /* Footer Hide: Height itni ki bottom content container ke bahar nikal jaye */
-            height: calc(100% + 140px); 
+            /* Footer Hide Logic: Stretch height to push credits out of container */
+            height: calc(100% + 150px); 
             background: white;
         }
 
-        /* DevCoderZ Footer Overlay (Original Credits Chhupane Ke Liye) */
-        .footer-overlay {
+        /* Credits Overlay - To cover original site's footer */
+        .footer-mask {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -120,12 +101,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-top: 1px solid var(--accent-primary);
+            border-top: 1px solid var(--accent);
             z-index: 10;
         }
 
-        .footer-text { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
-        .footer-text b { color: var(--accent-primary); }
+        .footer-text { font-size: 12px; color: #94a3b8; }
+        .footer-text b { color: var(--accent); }
 
         .live-clock {
             font-family: monospace;
@@ -133,32 +114,30 @@
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 14px;
-            border: 1px solid var(--accent-primary);
         }
-
     </style>
 </head>
 <body>
 
     <div class="sidebar" id="sidebar">
         <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-            <h2 style="font-size: 20px;">Study Portal</h2>
-            <i class="fas fa-times" onclick="toggleSidebar()" style="cursor:pointer; color: var(--accent-danger);"></i>
+            <h2 style="font-size: 20px;">Portal Menu</h2>
+            <i class="fas fa-times" onclick="toggleSidebar()" style="cursor:pointer;"></i>
         </div>
 
-        <div class="nav-item" onclick="loadBatch('https://eduvibe-nt.vercel.app')">
-            <i class="fas fa-graduation-cap"></i> 
-            <span>Main Study Batch</span>
+        <div class="nav-item" onclick="loadBatch('https://eduvibe-nt.pages.dev/')">
+            <i class="fas fa-book-reader"></i> 
+            <span>Main Study Material</span>
         </div>
 
         <div class="nav-item" onclick="window.open('https://t.me/DevCoderz', '_blank')">
             <i class="fab fa-telegram"></i> 
-            <span>Join Telegram</span>
+            <span>Official Telegram</span>
         </div>
 
-        <div style="position: absolute; bottom: 100px; left: 20px;">
-            <p style="font-size: 11px; color: var(--text-secondary);">User ID: Student_2026</p>
-            <p style="font-size: 11px; color: var(--text-secondary);">System: <b>DevCoderZ Engine</b></p>
+        <div style="position: absolute; bottom: 80px; left: 20px; font-size: 11px; color: #64748b;">
+            System Status: <span style="color:var(--success)">Online</span><br>
+            Powered by <b>DevCoderZ</b>
         </div>
     </div>
 
@@ -171,10 +150,10 @@
     </header>
 
     <main class="main-container">
-        <iframe src="https://eduvibe-nt.vercel.app" id="mainFrame"></iframe>
+        <iframe src="https://eduvibe-nt.pages.dev/" id="mainFrame"></iframe>
 
-        <div class="footer-overlay">
-            <div class="footer-text">Developed & Maintained by <b>DevCoderZ</b></div>
+        <div class="footer-mask">
+            <div class="footer-text">© 2026 Developed by <b>DevCoderZ</b></div>
         </div>
     </main>
 
@@ -188,7 +167,6 @@
             toggleSidebar();
         }
 
-        // Live Clock logic
         setInterval(() => {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString();
