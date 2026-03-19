@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DevCoderZ | Premium Hub</title>
+    <title>DevCoderZ | Study Hub</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,6 +13,7 @@
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
             --accent: #8b5cf6;
+            --white: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -39,19 +40,16 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Timer Styling - Fixed (No more black box) */
+        /* Pure White Timer (No Box) */
         .live-timer {
             font-family: 'Courier New', monospace;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-            padding: 5px 10px;
-            border-radius: 8px;
-            border: 1px solid var(--accent);
-            background: rgba(139, 92, 246, 0.1); /* Subtle purple tint */
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.5px;
         }
 
-        /* Container jo footer ko kaat dega */
+        /* Main Container for Clipping */
         .main-container {
             width: 100%;
             height: calc(100vh - 60px);
@@ -63,18 +61,18 @@
         iframe {
             width: 100%;
             border: none;
-            margin-top: -68px; /* Header Hide */
-            height: calc(100% + 500px); /* Push original footer way down */
+            margin-top: -68px; /* Top Header Hide */
+            height: calc(100% + 500px); /* Bottom Footer Push */
             display: block;
         }
 
-        /* Footer Mask */
+        /* Bottom DevCoderZ Overlay */
         .footer-mask {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 60px;
+            height: 55px;
             background: var(--bg-secondary);
             display: flex;
             align-items: center;
@@ -93,7 +91,7 @@
             width: 280px;
             height: 100%;
             background: var(--bg-secondary);
-            transition: 0.3s;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 2000;
             padding: 20px;
         }
@@ -108,6 +106,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -115,13 +115,13 @@
 
     <div class="sidebar" id="sidebar">
         <h3 style="margin-bottom:20px; color:var(--accent);">DevCoderZ Portal</h3>
-        <div class="nav-item" onclick="location.reload()"><i class="fas fa-sync"></i> Refresh Page</div>
-        <div class="nav-item" onclick="toggleSidebar()"><i class="fas fa-times"></i> Close</div>
+        <div class="nav-item" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Refresh Page</div>
+        <div class="nav-item" onclick="toggleSidebar()"><i class="fas fa-times"></i> Close Menu</div>
     </div>
 
     <header class="header">
         <div style="display: flex; align-items: center; gap: 12px;">
-            <i class="fas fa-bars" style="color:var(--accent); cursor:pointer;" onclick="toggleSidebar()"></i>
+            <i class="fas fa-bars" style="color:var(--accent); cursor:pointer; font-size: 20px;" onclick="toggleSidebar()"></i>
             <span class="brand-text">DevCoderZ</span>
         </div>
         <div class="live-timer" id="clock">00:00:00</div>
@@ -131,15 +131,28 @@
         <iframe src="https://eduvibe-nt.pages.dev/" id="mainFrame"></iframe>
 
         <div class="footer-mask">
-            <div class="footer-text">© 2026 Powered by <b>DevCoderZ</b></div>
+            <div class="footer-text">© 2026 Developed by <b>DevCoderZ</b></div>
         </div>
     </main>
 
     <script>
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        function toggleSidebar() { 
+            document.getElementById('sidebar').classList.toggle('active'); 
+        }
+
         setInterval(() => {
             const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; // 0 should be 12
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            seconds = seconds < 10 ? '0'+seconds : seconds;
+            
+            document.getElementById('clock').innerText = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
         }, 1000);
     </script>
 </body>
