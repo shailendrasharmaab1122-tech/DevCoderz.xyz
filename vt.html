@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>DevCoderz — Class 11th OG Kota Batch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05050a;--bg1:#0a0a12;--bg2:#0e0e1a;
+  --s1:#111120;--s2:#16162a;--s3:#1c1c34;
+  --b1:#202038;--b2:#2a2a48;
+  --acc:#7c6fff;--acc2:#a99bff;--acc3:#c8beff;
+  --grn:#34d399;--red:#f87171;--ylw:#fbbf24;--cyan:#22d3ee;
+  --t1:#eeeeff;--t2:#9898c0;--t3:#565680;
+  --r:12px;--r2:8px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:'Sora',sans-serif;min-height:100vh;overflow-x:hidden;-webkit-user-select:none;user-select:none}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+.nav{position:sticky;top:0;z-index:50;height:60px;display:flex;align-items:center;padding:0 28px;gap:16px;background:rgba(5,5,10,.92);backdrop-filter:blur(28px) saturate(180%);border-bottom:1px solid var(--b1)}
+.nlogo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.08rem;color:var(--t1);text-decoration:none;letter-spacing:-.025em}
+.nmark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:.85rem;box-shadow:0 0 20px rgba(124,111,255,.45)}
+.nsep{flex:1}
+.npill{font-size:.58rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);border:1px solid var(--b1);padding:5px 13px;border-radius:20px;background:var(--s1)}
+.bc{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:10px 28px;font-size:.74rem;color:var(--t3);border-bottom:1px solid var(--b1);background:var(--bg1)}
+.bc a{text-decoration:none;color:var(--t3);transition:color .15s}.bc a:hover{color:var(--acc3)}
+.bc .cur{color:var(--t1);font-weight:600}.bcs{opacity:.35;font-size:.65rem}
+.banner{position:relative;padding:52px 28px 42px;overflow:hidden;border-bottom:1px solid var(--b1)}
+.bnbg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 120% at 0% 50%,rgba(124,111,255,.14) 0%,transparent 60%),radial-gradient(ellipse 40% 80% at 100% 20%,rgba(169,155,255,.08) 0%,transparent 55%)}
+.bndots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(124,111,255,.15) 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(ellipse 90% 100% at 50% 50%,black 20%,transparent 75%)}
+.bnin{position:relative;z-index:1}
+.bney{display:inline-flex;align-items:center;gap:8px;font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--acc2);margin-bottom:16px;background:rgba(124,111,255,.08);border:1px solid rgba(124,111,255,.2);padding:5px 14px;border-radius:20px}
+.bney::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--grn);box-shadow:0 0 8px var(--grn);animation:gl 2s ease-in-out infinite}
+@keyframes gl{0%,100%{opacity:1}50%{opacity:.25}}
+.bnh1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.0;letter-spacing:-.035em;color:var(--t1);margin-bottom:14px}
+.bnh1 mark{background:none;background:linear-gradient(135deg,var(--acc),var(--acc2),var(--acc3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.bnmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.bst{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;color:var(--t2);background:var(--s1);border:1px solid var(--b1);padding:6px 14px;border-radius:8px}
+.body{padding:32px 28px 100px;max-width:1700px}
+.sec{margin-bottom:48px}
+.sechd{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.secln{flex:1;height:1px;background:linear-gradient(90deg,var(--b2) 0%,transparent 100%);margin-left:6px}
+.seclbl{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:5px 13px;border-radius:6px}
+.lf{color:var(--ylw);background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.18)}
+.lv{color:var(--acc2);background:rgba(124,111,255,.08);border:1px solid rgba(124,111,255,.22)}
+.fg{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:10px}
+.fc{display:flex;align-items:center;gap:13px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:15px 17px;text-decoration:none;color:inherit;transition:all .2s;position:relative;overflow:hidden}
+.fc:hover{border-color:var(--b2);background:var(--s2);transform:translateX(6px);box-shadow:6px 0 24px rgba(124,111,255,.1)}
+.fci{width:42px;height:42px;border-radius:11px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.18);display:flex;align-items:center;justify-content:center;font-size:1.15rem}
+.fcb{flex:1;min-width:0}.fcn{font-size:.86rem;font-weight:600;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:20px}
+.vc{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all .25s;position:relative}
+.vc:hover{border-color:rgba(124,111,255,.4);transform:translateY(-7px)}
+.vt{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000}
+.vo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);opacity:0;transition:opacity .28s}.vc:hover .vo{opacity:1}
+.vplay{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;box-shadow:0 0 36px rgba(124,111,255,.7)}
+.vb{padding:14px 15px 16px}.vtt{font-size:.87rem;font-weight:600;color:var(--t1)}
+.ov{display:none;position:fixed;inset:0;z-index:200;background:#000;flex-direction:column}.ov.on{display:flex}
+.pscreen{position:relative;flex:1;background:#000}.pscreen video{width:100%;height:100%;object-fit:contain}
+.pload{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;z-index:10}.pload.gone{opacity:0;pointer-events:none}
+.ring{width:44px;height:44px;border:3px solid rgba(255,255,255,0.1);border-top-color:var(--acc2);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.cov{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(to bottom,rgba(0,0,0,0.6),transparent,rgba(0,0,0,0.8));opacity:0;transition:opacity .28s;pointer-events:none}.cov.vis{opacity:1;pointer-events:all}
+.cov-top,.cov-bot{padding:14px 18px;display:flex;align-items:center}
+.cbk{background:none;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:600}
+@media(max-width:600px){.nav{padding:0 16px}.banner{padding:32px 16px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="?" class="nlogo"><div class="nmark">⚡</div>DevCoderz</a>
+  <div class="nsep"></div>
+  <span class="npill">Class 11th OG Kota Batch</span>
+</nav>
+
+<div class="bc">
+  <a href="?">Home</a> <span class="bcs">›</span> <span class="cur">Class 11th OG Kota Batch</span>
+</div>
+
+<div class="banner">
+  <div class="bnbg"></div><div class="bndots"></div>
+  <div class="bnin">
+    <div class="bney">Vibrant Academy · Kota</div>
+    <h1 class="bnh1"><mark>Class 11th OG Kota Batch</mark></h1>
+    <div class="bnmeta">
+      <div class="bst">10 Folders</div>
+      <div class="bst">1 Videos</div>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+<div class="sec">
+  <div class="sechd"><span class="seclbl lf">📁 Folders</span><div class="secln"></div></div>
+  <div class="fg">
+    <a href="#" class="fc"><div class="fci">📁</div><div class="fcb"><div class="fcn">Physics</div></div></a>
+    <a href="#" class="fc"><div class="fci">📁</div><div class="fcb"><div class="fcn">Maths</div></div></a>
+    <a href="#" class="fc"><div class="fci">📁</div><div class="fcb"><div class="fcn">Chemistry</div></div></a>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sechd"><span class="seclbl lv">▶ Videos</span><div class="secln"></div></div>
+  <div class="vg">
+    <div class="vc" onclick="_pv('3040','Orientation Session')">
+      <div class="vt">
+        <div class="vo"><div class="vplay"><svg width="20" height="20" fill="white" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></div>
+      </div>
+      <div class="vb"><div class="vtt">Orientation Session</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="ov" id="ov">
+  <div class="pscreen">
+    <video id="v" playsinline></video>
+    <div class="pload" id="pl"><div class="ring"></div></div>
+    <div class="cov" id="co">
+      <div class="cov-top">
+        <button class="cbk" onclick="_cp()">Back</button>
+        <span id="ct"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var _S=window.location.pathname, _K='c470a06d709e907dd5eeb5578f4f1aa8', _NK=_K, _v, _co;
+
+document.addEventListener('DOMContentLoaded', function(){
+  _v=document.getElementById('v');
+  _co=document.getElementById('co');
+});
+
+window._pv=function(id,title){
+  document.getElementById('ov').classList.add('on');
+  document.getElementById('ct').textContent=title;
+  document.getElementById('pl').classList.remove('gone');
+  fetch(_S+'?batch=1&_v='+id+'&_t='+_NK)
+    .then(r=>r.json())
+    .then(d=>{
+      if(d._nt)_NK=d._nt;
+      _ld(d.q['720p'] || Object.values(d.q)[0]);
+    });
+};
+
+function _ld(url){
+  if(Hls.isSupported()){
+    var hls=new Hls(); hls.loadSource(url); hls.attachMedia(_v);
+    hls.on(Hls.Events.MANIFEST_PARSED,()=>{document.getElementById('pl').classList.add('gone');_v.play();});
+  }
+}
+
+window._cp=function(){
+  document.getElementById('ov').classList.remove('on');
+  _v.pause(); _v.src='';
+};
+})();
+</script>
+</body></html>
