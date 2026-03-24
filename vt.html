@@ -3,131 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DevCoderz | Education Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<title>DevCoderz — Auto Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
-:root { --bg: #030712; --card: #111827; --primary: #6366f1; --border: #1f2937; --text: #f9fafb; --dim: #9ca3af; }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; }
-.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-header { height: 70px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
-.logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); cursor: pointer; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 15px; }
-.card:hover { border-color: var(--primary); transform: translateY(-3px); }
-.icon { width: 45px; height: 45px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-.player-mode { display: none; position: fixed; inset: 0; background: #000; z-index: 100; flex-direction: column; }
-.player-mode.active { display: flex; }
-video { width: 100%; height: 80vh; background: #000; }
-.p-head { padding: 20px; display: flex; align-items: center; gap: 20px; background: #111; }
-.btn { background: var(--primary); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-.hidden { display: none; }
+/* PREMIUM ROLEX STYLE DESIGN */
+:root { --bg:#05050a; --bg1:#0a0a12; --s1:#111120; --b1:#202038; --acc:#7c6fff; --t1:#eeeeff; --t2:#9898c0; }
+body { background:var(--bg); color:var(--t1); font-family:'Sora',sans-serif; margin:0; overflow-x:hidden; }
+.nav { height:65px; background:rgba(5,5,10,.9); border-bottom:1px solid var(--b1); display:flex; align-items:center; padding:0 25px; position:sticky; top:0; z-index:10; backdrop-filter:blur(10px); }
+.logo { font-weight:800; font-size:1.2rem; color:var(--t1); text-decoration:none; display:flex; align-items:center; gap:8px; }
+.logo span { background:var(--acc); padding:4px 8px; border-radius:8px; font-size:0.9rem; }
+.container { padding:30px 25px; max-width:1400px; margin:0 auto; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px; }
+.vc { background:var(--s1); border:1px solid var(--b1); border-radius:15px; overflow:hidden; cursor:pointer; transition:0.3s; position:relative; }
+.vc:hover { transform:translateY(-5px); border-color:var(--acc); box-shadow:0 10px 30px rgba(124,111,255,0.2); }
+.vt { width:100%; aspect-ratio:16/9; background:#000; position:relative; }
+.vt img { width:100%; height:100%; object-fit:cover; }
+.vb { padding:15px; }
+.vtt { font-size:0.85rem; font-weight:600; line-height:1.4; color:var(--t1); height:40px; overflow:hidden; }
+.vtag { font-size:0.6rem; color:var(--acc); text-transform:uppercase; font-weight:700; margin-bottom:8px; display:block; }
+/* PLAYER OVERLAY */
+.ov { display:none; position:fixed; inset:0; background:#000; z-index:100; flex-direction:column; }
+.ov.active { display:flex; }
+video { width:100%; height:80vh; background:#000; }
+.p-nav { padding:15px; background:#111; display:flex; align-items:center; gap:15px; border-bottom:1px solid #222; }
+.btn-back { background:var(--acc); color:white; border:none; padding:8px 18px; border-radius:8px; cursor:pointer; font-weight:600; }
+#loading { text-align:center; padding:100px; color:var(--t2); font-size:1.1rem; }
 </style>
 </head>
 <body>
 
+<nav class="nav">
+    <a href="#" class="logo"><span>DEV</span> CODERZ</a>
+</nav>
+
 <div class="container">
-    <header>
-        <div class="logo" onclick="showHome()">DEVCODERZ</div>
-        <div id="nav-info" style="font-size: 0.8rem; color: var(--dim);">Main Menu</div>
-    </header>
-
-    <div id="home-view">
-        <h2 style="margin-bottom: 20px;">Study Materials</h2>
-        <div class="grid" id="folder-list"></div>
-    </div>
-
-    <div id="video-view" class="hidden">
-        <h2 id="folder-title" style="margin-bottom: 20px;"></h2>
-        <div class="grid" id="lecture-list"></div>
-    </div>
+    <h2 style="margin-bottom:25px; font-weight:800;">Recent Lectures</h2>
+    <div id="loading">Searching for new lectures...</div>
+    <div class="grid" id="main-grid"></div>
 </div>
 
-<div class="player-mode" id="player">
-    <div class="p-head">
-        <button class="btn" onclick="closePlayer()">CLOSE PLAYER</button>
-        <div id="now-playing"></div>
+<div class="ov" id="player-ov">
+    <div class="p-nav">
+        <button class="btn-back" onclick="closePlayer()">← BACK</button>
+        <span id="video-title" style="font-size:0.9rem; font-weight:600;"></span>
     </div>
-    <video id="vid" controls></video>
+    <video id="main-video" controls autoplay></video>
 </div>
 
 <script>
-// YAHAN APNA DATA DAALO (Isse automatic update honge buttons)
-const data = {
-    "Physics": [
-        { title: "Introduction to Units", url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
-        { title: "Kinematics L1", url: "YOUR_M3U8_LINK_HERE" }
-    ],
-    "Mathematics": [
-        { title: "Set Theory Basics", url: "YOUR_M3U8_LINK_HERE" }
-    ],
-    "Chemistry": [
-        { title: "Atomic Structure", url: "YOUR_M3U8_LINK_HERE" }
-    ]
+// --- CONFIGURATION (Sirf ye update karte rehna) ---
+const CONFIG = {
+    BASE_URL: 'https://vt.rolexcoderz.in/index.php',
+    BATCH: '1',
+    FOLDER: '3380', // Classes folder ID
+    TOKEN: '111a5c5a34093e7b5754fec6378a5dce' // Expire ho toh naya daal dena
 };
 
-const homeView = document.getElementById('home-view');
-const videoView = document.getElementById('video-view');
-const folderList = document.getElementById('folder-list');
-const lectureList = document.getElementById('lecture-list');
-const player = document.getElementById('player');
-const vid = document.getElementById('vid');
+const grid = document.getElementById('main-grid');
+const loading = document.getElementById('loading');
 let hls = null;
 
-function showHome() {
-    homeView.classList.remove('hidden');
-    videoView.classList.add('hidden');
-    document.getElementById('nav-info').innerText = "Main Menu";
-    renderFolders();
+// AUTOMATIC FETCH LOGIC
+async function autoUpdate() {
+    // CORS bypass using Proxy
+    const target = `${CONFIG.BASE_URL}?batch=${CONFIG.BATCH}&f=${CONFIG.FOLDER}&_t=${CONFIG.TOKEN}`;
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(target)}`;
+
+    try {
+        const response = await fetch(proxy);
+        const data = await response.json();
+        const html = data.contents;
+        
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const cards = doc.querySelectorAll('.vc'); // Rolex site cards
+
+        if(cards.length === 0) throw "No lectures found";
+
+        loading.style.display = 'none';
+        grid.innerHTML = '';
+
+        cards.forEach(card => {
+            const title = card.querySelector('.vtt').innerText;
+            const thumb = card.querySelector('img').src;
+            const onclick = card.getAttribute('onclick');
+            const id = onclick.match(/'(\d+)'/)[1];
+
+            const myCard = document.createElement('div');
+            myCard.className = 'vc';
+            myCard.onclick = () => getStream(id, title);
+            myCard.innerHTML = `
+                <div class="vt"><img src="${thumb}"></div>
+                <div class="vb">
+                    <span class="vtag">Class 11th Lecture</span>
+                    <div class="vtt">${title}</div>
+                </div>
+            `;
+            grid.appendChild(myCard);
+        });
+    } catch (e) {
+        loading.innerHTML = "⚠️ Update Failed! Token expire ho gaya hoga.";
+    }
 }
 
-function renderFolders() {
-    folderList.innerHTML = '';
-    Object.keys(data).forEach(folder => {
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.onclick = () => openFolder(folder);
-        div.innerHTML = `<div class="icon">📁</div><div><strong>${folder}</strong><br><small style="color:var(--dim)">${data[folder].length} Lectures</small></div>`;
-        folderList.appendChild(div);
-    });
-}
-
-function openFolder(name) {
-    homeView.classList.add('hidden');
-    videoView.classList.remove('hidden');
-    document.getElementById('folder-title').innerText = name;
-    document.getElementById('nav-info').innerText = "Home > " + name;
+// VIDEO STREAM LOGIC
+async function getStream(id, title) {
+    const streamTarget = `${CONFIG.BASE_URL}?batch=${CONFIG.BATCH}&_v=${id}&_t=${CONFIG.TOKEN}`;
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(streamTarget)}`;
     
-    lectureList.innerHTML = '';
-    data[name].forEach(lec => {
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.onclick = () => startPlay(lec.title, lec.url);
-        div.innerHTML = `<div class="icon">▶</div><div><strong>${lec.title}</strong></div>`;
-        lectureList.appendChild(div);
-    });
+    try {
+        const res = await fetch(proxy);
+        const data = await res.json();
+        const streamData = JSON.parse(data.contents); // Unka JSON response
+        
+        const m3u8 = streamData.q['720p'] || Object.values(streamData.q)[0];
+        openPlayer(m3u8, title);
+    } catch (e) {
+        alert("Video play nahi ho raha!");
+    }
 }
 
-function startPlay(title, url) {
-    player.classList.add('active');
-    document.getElementById('now-playing').innerText = title;
+function openPlayer(url, title) {
+    const ov = document.getElementById('player-ov');
+    const v = document.getElementById('main-video');
+    document.getElementById('video-title').innerText = title;
+    ov.classList.add('active');
+
     if (Hls.isSupported()) {
         if(hls) hls.destroy();
         hls = new Hls();
         hls.loadSource(url);
-        hls.attachMedia(vid);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => vid.play());
+        hls.attachMedia(v);
+    } else {
+        v.src = url;
     }
 }
 
 function closePlayer() {
-    player.classList.remove('active');
-    vid.pause();
-    if(hls) hls.destroy();
+    document.getElementById('player-ov').classList.remove('active');
+    document.getElementById('main-video').pause();
 }
 
-renderFolders();
+// RUN ON LOAD
+autoUpdate();
 </script>
 </body>
 </html>
