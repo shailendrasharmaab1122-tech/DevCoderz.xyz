@@ -25,7 +25,7 @@
             overflow: hidden;
         }
 
-        /* Top Navigation Bar */
+        /* Top Navigation Bar - DevCoderz Branding */
         .nav {
             height: 65px;
             background: rgba(5, 5, 10, 0.95);
@@ -34,13 +34,12 @@
             align-items: center;
             padding: 0 25px;
             backdrop-filter: blur(10px);
-            flex-shrink: 0;
+            z-index: 10;
         }
 
         .logo {
             font-weight: 800;
             font-size: 1.2rem;
-            letter-spacing: 1px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -55,17 +54,34 @@
             font-size: 0.9rem;
         }
 
-        /* Iframe Area - Poori bachi hui jagah lega */
-        .portal-container {
+        /* Iframe Container - Rolex Branding ko hide karne ke liye */
+        .portal-wrapper {
             flex-grow: 1;
-            width: 100%;
+            position: relative;
+            overflow: hidden; /* Bahar ka hissa cut jayega */
             background: #000;
         }
 
         iframe {
+            position: absolute;
+            /* Upar ki branding hatane ke liye negative top */
+            top: -65px; 
+            left: 0;
             width: 100%;
-            height: 100%;
+            /* Niche ki branding hatane ke liye height thodi zyada */
+            height: calc(100% + 120px); 
             border: none;
+        }
+
+        /* Overlay to block unwanted clicks on hidden areas (Optional) */
+        .blocker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--bg);
+            z-index: 5;
         }
     </style>
 </head>
@@ -75,7 +91,8 @@
         <div class="logo"><span>DEV</span> CODERZ</div>
     </nav>
 
-    <div class="portal-container">
+    <div class="portal-wrapper">
+        <div class="blocker"></div>
         <iframe 
             src="https://vt.rolexcoderz.in/index.php?rcz_tok=60fa9ff3fa1e8df5" 
             title="DevCoderz Portal"
