@@ -1,164 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DevCoderz — Auto Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<style>
-/* PREMIUM ROLEX STYLE DESIGN */
-:root { --bg:#05050a; --bg1:#0a0a12; --s1:#111120; --b1:#202038; --acc:#7c6fff; --t1:#eeeeff; --t2:#9898c0; }
-body { background:var(--bg); color:var(--t1); font-family:'Sora',sans-serif; margin:0; overflow-x:hidden; }
-.nav { height:65px; background:rgba(5,5,10,.9); border-bottom:1px solid var(--b1); display:flex; align-items:center; padding:0 25px; position:sticky; top:0; z-index:10; backdrop-filter:blur(10px); }
-.logo { font-weight:800; font-size:1.2rem; color:var(--t1); text-decoration:none; display:flex; align-items:center; gap:8px; }
-.logo span { background:var(--acc); padding:4px 8px; border-radius:8px; font-size:0.9rem; }
-.container { padding:30px 25px; max-width:1400px; margin:0 auto; }
-.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px; margin-bottom: 40px; }
-.vc { background:var(--s1); border:1px solid var(--b1); border-radius:15px; overflow:hidden; cursor:pointer; transition:0.3s; position:relative; }
-.vc:hover { transform:translateY(-5px); border-color:var(--acc); box-shadow:0 10px 30px rgba(124,111,255,0.2); }
-.vt { width:100%; aspect-ratio:16/9; background:#000; position:relative; }
-.vt img { width:100%; height:100%; object-fit:cover; }
-.vb { padding:15px; }
-.vtt { font-size:0.85rem; font-weight:600; line-height:1.4; color:var(--t1); height:40px; overflow:hidden; }
-.vtag { font-size:0.6rem; color:var(--acc); text-transform:uppercase; font-weight:700; margin-bottom:8px; display:block; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevCoderz — Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #05050a;
+            --acc: #7c6fff;
+            --t1: #eeeeff;
+            --b1: #202038;
+        }
 
-/* IFRAME SECTION */
-.iframe-section { margin-top: 40px; border-radius: 20px; overflow: hidden; border: 1px solid var(--b1); background: var(--s1); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-.iframe-header { padding: 15px 20px; background: var(--bg1); border-bottom: 1px solid var(--b1); font-size: 0.9rem; font-weight: 600; color: var(--acc); display: flex; align-items: center; gap: 10px; }
-.iframe-container { width: 100%; height: 600px; background: #fff; }
-.iframe-container iframe { width: 100%; height: 100%; border: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* PLAYER OVERLAY */
-.ov { display:none; position:fixed; inset:0; background:#000; z-index:100; flex-direction:column; }
-.ov.active { display:flex; }
-video { width:100%; height:80vh; background:#000; }
-.p-nav { padding:15px; background:#111; display:flex; align-items:center; gap:15px; border-bottom:1px solid #222; }
-.btn-back { background:var(--acc); color:white; border:none; padding:8px 18px; border-radius:8px; cursor:pointer; font-weight:600; }
-#loading { text-align:center; padding:100px; color:var(--t2); font-size:1.1rem; }
-</style>
+        body {
+            background: var(--bg);
+            color: var(--t1);
+            font-family: 'Sora', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Navigation Bar */
+        .nav {
+            height: 65px;
+            background: rgba(5, 5, 10, 0.95);
+            border-bottom: 1px solid var(--b1);
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            background: var(--acc);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* Iframe Area - Poori bachi hui jagah lega */
+        .portal-container {
+            flex-grow: 1;
+            width: 100%;
+            background: #000;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
 </head>
 <body>
 
-<nav class="nav">
-    <a href="#" class="logo"><span>DEV</span> CODERZ</a>
-</nav>
+    <nav class="nav">
+        <div class="logo"><span>DEV</span> CODERZ</div>
+    </nav>
 
-<div class="container">
-    <h2 style="margin-bottom:25px; font-weight:800;">Recent Lectures</h2>
-    <div id="loading">Searching for new lectures...</div>
-    <div class="grid" id="main-grid"></div>
-
-    <div class="iframe-section">
-        <div class="iframe-header">
-            <span style="width:10px; height:10px; background:#ff4b4b; border-radius:50%; display:inline-block;"></span>
-            LIVE ROLEX PORTAL
-        </div>
-        <div class="iframe-container">
-            <iframe src="https://vt.rolexcoderz.in/index.php?rcz_tok=60fa9ff3fa1e8df5" title="External Site"></iframe>
-        </div>
+    <div class="portal-container">
+        <iframe 
+            src="https://vt.rolexcoderz.in/index.php?rcz_tok=60fa9ff3fa1e8df5" 
+            title="DevCoderz Portal"
+            allow="autoplay; fullscreen" 
+            allowfullscreen>
+        </iframe>
     </div>
-</div>
 
-<div class="ov" id="player-ov">
-    <div class="p-nav">
-        <button class="btn-back" onclick="closePlayer()">← BACK</button>
-        <span id="video-title" style="font-size:0.9rem; font-weight:600;"></span>
-    </div>
-    <video id="main-video" controls autoplay></video>
-</div>
-
-<script>
-// Yahan tumhara wahi fetch logic rahega jo pehle diya tha
-const CONFIG = {
-    BASE_URL: 'https://vt.rolexcoderz.in/index.php',
-    BATCH: '1',
-    FOLDER: '3380', 
-    TOKEN: '111a5c5a34093e7b5754fec6378a5dce' 
-};
-
-const grid = document.getElementById('main-grid');
-const loading = document.getElementById('loading');
-let hls = null;
-
-async function autoUpdate() {
-    const target = `${CONFIG.BASE_URL}?batch=${CONFIG.BATCH}&f=${CONFIG.FOLDER}&_t=${CONFIG.TOKEN}`;
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(target)}`;
-
-    try {
-        const response = await fetch(proxy);
-        const data = await response.json();
-        const html = data.contents;
-        
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const cards = doc.querySelectorAll('.vc'); 
-
-        if(cards.length === 0) throw "No lectures found";
-
-        loading.style.display = 'none';
-        grid.innerHTML = '';
-
-        cards.forEach(card => {
-            const title = card.querySelector('.vtt').innerText;
-            const thumb = card.querySelector('img').src;
-            const onclick = card.getAttribute('onclick');
-            const id = onclick.match(/'(\d+)'/)[1];
-
-            const myCard = document.createElement('div');
-            myCard.className = 'vc';
-            myCard.onclick = () => getStream(id, title);
-            myCard.innerHTML = `
-                <div class="vt"><img src="${thumb}"></div>
-                <div class="vb">
-                    <span class="vtag">Class 11th Lecture</span>
-                    <div class="vtt">${title}</div>
-                </div>
-            `;
-            grid.appendChild(myCard);
-        });
-    } catch (e) {
-        loading.innerHTML = "⚠️ Update Failed! Token check karein.";
-    }
-}
-
-async function getStream(id, title) {
-    const streamTarget = `${CONFIG.BASE_URL}?batch=${CONFIG.BATCH}&_v=${id}&_t=${CONFIG.TOKEN}`;
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(streamTarget)}`;
-    
-    try {
-        const res = await fetch(proxy);
-        const data = await res.json();
-        const streamData = JSON.parse(data.contents); 
-        const m3u8 = streamData.q['720p'] || Object.values(streamData.q)[0];
-        openPlayer(m3u8, title);
-    } catch (e) {
-        alert("Video play nahi ho raha!");
-    }
-}
-
-function openPlayer(url, title) {
-    const ov = document.getElementById('player-ov');
-    const v = document.getElementById('main-video');
-    document.getElementById('video-title').innerText = title;
-    ov.classList.add('active');
-
-    if (Hls.isSupported()) {
-        if(hls) hls.destroy();
-        hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(v);
-    } else {
-        v.src = url;
-    }
-}
-
-function closePlayer() {
-    document.getElementById('player-ov').classList.remove('active');
-    document.getElementById('main-video').pause();
-}
-
-autoUpdate();
-</script>
 </body>
 </html>
