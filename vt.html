@@ -3,291 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DevCoderz | Premium Learning Interface</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+<title>DevCoderz | Education Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
-:root {
-    --bg: #030712;
-    --card: #111827;
-    --primary: #6366f1;
-    --primary-glow: rgba(99, 102, 241, 0.4);
-    --accent: #06b6d4;
-    --text-main: #f9fafb;
-    --text-dim: #9ca3af;
-    --border: #1f2937;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-body { background: var(--bg); color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-
-.app-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
-
-header { 
-    height: 80px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 40px;
-}
-
-.logo { 
-    font-size: 1.5rem; 
-    font-weight: 800; 
-    background: linear-gradient(to right, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -1px;
-}
-
-.hero { 
-    background: linear-gradient(135deg, var(--card) 0%, #030712 100%);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 60px 40px;
-    margin-bottom: 50px;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::after {
-    content: '';
-    position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 200px;
-    height: 200px;
-    background: var(--primary);
-    filter: blur(120px);
-    opacity: 0.3;
-}
-
-.hero h1 { font-size: 2.5rem; margin-bottom: 15px; font-weight: 800; }
-.hero p { color: var(--text-dim); font-size: 1.1rem; }
-
-.section-title { 
-    font-size: 0.8rem; 
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-    color: var(--primary); 
-    margin-bottom: 25px; 
-    display: flex; 
-    align-items: center; 
-    gap: 10px;
-}
-
-.section-title::after { content: ''; height: 1px; flex: 1; background: var(--border); }
-
-.grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-    gap: 20px; 
-    margin-bottom: 60px;
-}
-
-.folder-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    text-decoration: none;
-    color: inherit;
-    transition: 0.3s;
-}
-
-.folder-card:hover { 
-    border-color: var(--primary); 
-    background: #1e293b; 
-    transform: translateY(-5px); 
-    box-shadow: 0 10px 30px -10px var(--primary-glow);
-}
-
-.icon-box { 
-    width: 48px; 
-    height: 48px; 
-    background: rgba(99, 102, 241, 0.1); 
-    border-radius: 12px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    color: var(--primary);
-    font-size: 1.5rem;
-}
-
-.video-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.video-card:hover { border-color: var(--accent); transform: scale(1.02); }
-
-.thumb { 
-    aspect-ratio: 16/9; 
-    background: #000; 
-    position: relative; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-}
-
-.play-btn { 
-    width: 50px; 
-    height: 50px; 
-    background: var(--primary); 
-    border-radius: 50%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-}
-
-.video-info { padding: 20px; }
-.video-info h3 { font-size: 1rem; margin-bottom: 5px; }
-
-.player-overlay {
-    position: fixed;
-    inset: 0;
-    background: #000;
-    z-index: 1000;
-    display: none;
-    flex-direction: column;
-}
-
-.player-overlay.active { display: flex; }
-
-.player-header {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    padding: 0 30px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-    position: absolute;
-    top: 0; width: 100%; z-index: 10;
-}
-
-.close-btn { 
-    background: rgba(255,255,255,0.1); 
-    border: none; 
-    color: #fff; 
-    padding: 10px 20px; 
-    border-radius: 30px; 
-    cursor: pointer; 
-    font-weight: 600;
-}
-
-#video-element { width: 100%; height: 100vh; background: #000; }
-
-@media (max-width: 768px) {
-    .hero { padding: 40px 20px; }
-    .hero h1 { font-size: 1.8rem; }
-}
+:root { --bg: #030712; --card: #111827; --primary: #6366f1; --border: #1f2937; --text: #f9fafb; --dim: #9ca3af; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+header { height: 70px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
+.logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); cursor: pointer; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 15px; }
+.card:hover { border-color: var(--primary); transform: translateY(-3px); }
+.icon { width: 45px; height: 45px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+.player-mode { display: none; position: fixed; inset: 0; background: #000; z-index: 100; flex-direction: column; }
+.player-mode.active { display: flex; }
+video { width: 100%; height: 80vh; background: #000; }
+.p-head { padding: 20px; display: flex; align-items: center; gap: 20px; background: #111; }
+.btn { background: var(--primary); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.hidden { display: none; }
 </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="container">
     <header>
-        <div class="logo">DEVCODERZ</div>
-        <div style="font-size: 0.7rem; color: var(--text-dim);">SYSTEM_V3.0</div>
+        <div class="logo" onclick="showHome()">DEVCODERZ</div>
+        <div id="nav-info" style="font-size: 0.8rem; color: var(--dim);">Main Menu</div>
     </header>
 
-    <div class="hero">
-        <div class="bney" style="color: var(--accent); font-size: 0.7rem; margin-bottom: 10px; display: block;">OFFICIAL KOTA CURRICULUM</div>
-        <h1>Class 11th OG Batch</h1>
-        <p>Advanced Streaming & Analytics Enabled</p>
+    <div id="home-view">
+        <h2 style="margin-bottom: 20px;">Study Materials</h2>
+        <div class="grid" id="folder-list"></div>
     </div>
 
-    <div class="section-title">SUBJECT DIRECTORY</div>
-    <div class="grid">
-        <a href="#" class="folder-card">
-            <div class="icon-box">φ</div>
-            <div><strong>Physics</strong><div style="font-size: 0.7rem; color: var(--text-dim);">24 Lectures</div></div>
-        </a>
-        <a href="#" class="folder-card">
-            <div class="icon-box">∫</div>
-            <div><strong>Mathematics</strong><div style="font-size: 0.7rem; color: var(--text-dim);">18 Lectures</div></div>
-        </a>
-        <a href="#" class="folder-card">
-            <div class="icon-box">⚛</div>
-            <div><strong>Chemistry</strong><div style="font-size: 0.7rem; color: var(--text-dim);">31 Lectures</div></div>
-        </a>
-    </div>
-
-    <div class="section-title">RECENT LECTURES</div>
-    <div class="grid">
-        <div class="video-card" onclick="startPlay('3040', 'Orientation Session')">
-            <div class="thumb">
-                <div class="play-btn">
-                    <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-            </div>
-            <div class="video-info">
-                <h3>Orientation Session</h3>
-                <span style="font-size: 0.75rem; color: var(--accent);">VIBRANT ACADEMY</span>
-            </div>
-        </div>
+    <div id="video-view" class="hidden">
+        <h2 id="folder-title" style="margin-bottom: 20px;"></h2>
+        <div class="grid" id="lecture-list"></div>
     </div>
 </div>
 
-<div class="player-overlay" id="playerOverlay">
-    <div class="player-header">
-        <button class="close-btn" onclick="stopPlay()">← BACK TO BATCH</button>
-        <div id="videoTitle" style="margin-left: 20px; font-weight: 600;"></div>
+<div class="player-mode" id="player">
+    <div class="p-head">
+        <button class="btn" onclick="closePlayer()">CLOSE PLAYER</button>
+        <div id="now-playing"></div>
     </div>
-    <video id="video-element" controls playsinline></video>
+    <video id="vid" controls></video>
 </div>
 
 <script>
-const playerOverlay = document.getElementById('playerOverlay');
-const video = document.getElementById('video-element');
-const videoTitle = document.getElementById('videoTitle');
+// YAHAN APNA DATA DAALO (Isse automatic update honge buttons)
+const data = {
+    "Physics": [
+        { title: "Introduction to Units", url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
+        { title: "Kinematics L1", url: "YOUR_M3U8_LINK_HERE" }
+    ],
+    "Mathematics": [
+        { title: "Set Theory Basics", url: "YOUR_M3U8_LINK_HERE" }
+    ],
+    "Chemistry": [
+        { title: "Atomic Structure", url: "YOUR_M3U8_LINK_HERE" }
+    ]
+};
+
+const homeView = document.getElementById('home-view');
+const videoView = document.getElementById('video-view');
+const folderList = document.getElementById('folder-list');
+const lectureList = document.getElementById('lecture-list');
+const player = document.getElementById('player');
+const vid = document.getElementById('vid');
 let hls = null;
 
-function startPlay(id, title) {
-    playerOverlay.classList.add('active');
-    videoTitle.innerText = title;
-    
-    const apiPath = window.location.pathname + '?batch=1&_v=' + id;
-    
-    fetch(apiPath)
-    .then(r => r.json())
-    .then(data => {
-        const streamUrl = data.q['720p'] || Object.values(data.q)[0];
-        loadSource(streamUrl);
-    })
-    .catch(e => {
-        const fallback = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
-        loadSource(fallback);
+function showHome() {
+    homeView.classList.remove('hidden');
+    videoView.classList.add('hidden');
+    document.getElementById('nav-info').innerText = "Main Menu";
+    renderFolders();
+}
+
+function renderFolders() {
+    folderList.innerHTML = '';
+    Object.keys(data).forEach(folder => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.onclick = () => openFolder(folder);
+        div.innerHTML = `<div class="icon">📁</div><div><strong>${folder}</strong><br><small style="color:var(--dim)">${data[folder].length} Lectures</small></div>`;
+        folderList.appendChild(div);
     });
 }
 
-function loadSource(url) {
+function openFolder(name) {
+    homeView.classList.add('hidden');
+    videoView.classList.remove('hidden');
+    document.getElementById('folder-title').innerText = name;
+    document.getElementById('nav-info').innerText = "Home > " + name;
+    
+    lectureList.innerHTML = '';
+    data[name].forEach(lec => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.onclick = () => startPlay(lec.title, lec.url);
+        div.innerHTML = `<div class="icon">▶</div><div><strong>${lec.title}</strong></div>`;
+        lectureList.appendChild(div);
+    });
+}
+
+function startPlay(title, url) {
+    player.classList.add('active');
+    document.getElementById('now-playing').innerText = title;
     if (Hls.isSupported()) {
         if(hls) hls.destroy();
         hls = new Hls();
         hls.loadSource(url);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
-        video.addEventListener('loadedmetadata', () => video.play());
+        hls.attachMedia(vid);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => vid.play());
     }
 }
 
-function stopPlay() {
-    playerOverlay.classList.remove('active');
-    video.pause();
-    video.src = '';
+function closePlayer() {
+    player.classList.remove('active');
+    vid.pause();
     if(hls) hls.destroy();
 }
-</script>
 
+renderFolders();
+</script>
 </body>
 </html>
