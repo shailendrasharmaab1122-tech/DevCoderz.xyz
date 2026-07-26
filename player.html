@@ -79,26 +79,47 @@ video{width:100%;height:100%;object-fit:contain}
 <script>
 const player=document.getElementById("player"),v=document.getElementById("video"),playBtn=document.getElementById("play"),back=document.getElementById("back"),fwd=document.getElementById("fwd"),fs=document.getElementById("fs"),controls=document.getElementById("controls"),centerPlay=document.getElementById("centerPlay"),progress=document.getElementById("progress"),bar=document.getElementById("bar"),thumb=document.getElementById("thumb"),tgPopup=document.getElementById("tgPopup"),continueBtn=document.getElementById("continueBtn"),timeDisplay=document.getElementById("time"),settings=document.getElementById("settings"),settingsBtn=document.getElementById("settingsBtn"),speed=document.getElementById("speed"),quality=document.getElementById("quality");
 let drag=false,hideTimer,hls;
-const urlParams=new URLSearchParams(location.search);
-const url=urlParams.get("Url");
 
-if(url){
- const decodedUrl=decodeURIComponent(url);
- if(Hls.isSupported()){
-  hls=new Hls();
-  hls.loadSource(decodedUrl);
-  hls.attachMedia(v);
-  hls.on(Hls.Events.MANIFEST_PARSED,()=>{
-   quality.innerHTML='<option value="-1">AUTO</option>';
-   hls.levels.forEach((l,i)=>{let o=document.createElement("option");o.value=i;o.text=l.height+"p";quality.appendChild(o);});
-  });
-  hls.on(Hls.Events.LEVEL_SWITCHED,(e,data)=>{
-   quality.value=data.level;
-  });
- }else if(v.canPlayType('application/vnd.apple.mpegurl')){
-  v.src=decodedUrl;
- }
+const urlParams=new URLSearchParams(location.search);
+const contentId = urlParams.get("contentId") || "22655";
+const courseId = urlParams.get("courseId") || "178";
+const rawUrl = urlParams.get("Url");
+
+async function initPlayer() {
+    let videoUrl = "";
+    if (rawUrl) {
+        videoUrl = decodeURIComponent(rawUrl);
+    } else {
+        try {
+            const res = await fetch(`https://api.thescholarverse.site/nexttoppers/course/content-details/${contentId}?course_id=${courseId}`);
+            const json = await res.json();
+            if (json && json.data && json.data.decryptedData) {
+                videoUrl = json.data.decryptedData.file_url;
+            }
+        } catch (e) {
+            console.error("Error fetching content details", e);
+        }
+    }
+
+    if (videoUrl) {
+        if (Hls.isSupported()) {
+            hls = new Hls();
+            hls.loadSource(videoUrl);
+            hls.attachMedia(v);
+            hls.on(Hls.Events.MANIFEST_PARSED,()=>{
+                quality.innerHTML='<option value="-1">AUTO</option>';
+                hls.levels.forEach((l,i)=>{let o=document.createElement("option");o.value=i;o.text=l.height+"p";quality.appendChild(o);});
+            });
+            hls.on(Hls.Events.LEVEL_SWITCHED,(e,data)=>{
+                quality.value=data.level;
+            });
+        } else if (v.canPlayType('application/vnd.apple.mpegurl')) {
+            v.src = videoUrl;
+        }
+    }
 }
+
+initPlayer();
 
 function fmt(t){if(!t||isNaN(t)||t===Infinity)return"00:00:00";let h=Math.floor(t/3600),m=Math.floor((t%3600)/60),s=Math.floor(t%60);return[h,m,s].map(n=>String(n).padStart(2,"0")).join(":");}
 function safePlay(){v.play().catch(()=>{v.muted=true;v.play();});}
