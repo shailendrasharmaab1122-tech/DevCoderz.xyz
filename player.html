@@ -18,7 +18,7 @@ video{width:100%;height:100%;object-fit:contain}
 .controls{position:absolute;bottom:0;width:100%;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,.9));transition:.3s;z-index:35;touch-action:none}
 .controls.hide{transform:translateY(100%);opacity:0}
 .progress{height:7px;background:#555;border-radius:10px;position:relative;margin-bottom:6px;touch-action:none;cursor:pointer}
-.progress-fill{height:100%;width:0;background:#2196f3;border-radius:10px}
+.progress-fill{height:100%;width:0;background:#2196f3;border-radius:10px;pointer-events:none}
 .thumb{position:absolute;top:50%;width:18px;height:18px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);left:0;pointer-events:none}
 .time{color:#fff;font-size:11px;text-align:right;margin-bottom:4px}
 .row{display:flex;align-items:center;gap:6px;justify-content:space-between;color:#fff}
@@ -78,7 +78,7 @@ video{width:100%;height:100%;object-fit:contain}
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
 const player=document.getElementById("player"),v=document.getElementById("video"),playBtn=document.getElementById("play"),back=document.getElementById("back"),fwd=document.getElementById("fwd"),fs=document.getElementById("fs"),controls=document.getElementById("controls"),centerPlay=document.getElementById("centerPlay"),progress=document.getElementById("progress"),bar=document.getElementById("bar"),thumb=document.getElementById("thumb"),tgPopup=document.getElementById("tgPopup"),continueBtn=document.getElementById("continueBtn"),timeDisplay=document.getElementById("time"),settings=document.getElementById("settings"),settingsBtn=document.getElementById("settingsBtn"),speed=document.getElementById("speed"),quality=document.getElementById("quality");
-let drag=false,hideTimer,hls;
+let drag=false,hideTimer,hls,wasPlaying=false;
 
 const urlParams=new URLSearchParams(location.search);
 const contentId = urlParams.get("contentId") || "22655";
@@ -122,8 +122,14 @@ async function initPlayer() {
 initPlayer();
 
 function fmt(t){if(!t||isNaN(t)||t===Infinity)return"00:00:00";let h=Math.floor(t/3600),m=Math.floor((t%3600)/60),s=Math.floor(t%60);return[h,m,s].map(n=>String(n).padStart(2,"0")).join(":");}
+function updateProgressUI(percent, currentTime, duration){
+    bar.style.width=percent+"%";
+    thumb.style.left=percent+"%";
+    timeDisplay.innerText=`${fmt(currentTime)} / ${fmt(duration)}`;
+}
 function safePlay(){v.play().catch(()=>{v.muted=true;v.play();});}
 function show(f=false){controls.classList.remove("hide");clearTimeout(hideTimer);if(!f)hideTimer=setTimeout(()=>controls.classList.add("hide"),3000);}
+
 continueBtn.onclick=e=>{e.preventDefault();e.stopPropagation();tgPopup.style.display="none";centerPlay.classList.remove("hide");controls.classList.remove("hide");show();};
 centerPlay.onclick=e=>{e.preventDefault();e.stopPropagation();safePlay();};
 playBtn.onclick=e=>{e.preventDefault();e.stopPropagation();v.paused?safePlay():v.pause();};
@@ -133,12 +139,63 @@ settingsBtn.onclick=e=>{e.preventDefault();e.stopPropagation();settings.style.di
 speed.onchange=e=>{v.playbackRate=parseFloat(speed.value);};
 quality.onchange=e=>{if(hls)hls.currentLevel=parseInt(quality.value);};
 fs.onclick=e=>{e.preventDefault();e.stopPropagation();if(!document.fullscreenElement){player.requestFullscreen()}else{document.exitFullscreen()}};
-progress.onpointerdown=e=>{e.preventDefault();e.stopPropagation();drag=true;progress.setPointerCapture(e.pointerId);v.pause();const s=(e.clientX-progress.getBoundingClientRect().left)/progress.offsetWidth;v.currentTime=s*v.duration;updateProgress(s*100);};
-progress.onpointermove=e=>{if(drag){e.preventDefault();e.stopPropagation();const s=Math.max(0,Math.min(1,(e.clientX-progress.getBoundingClientRect().left)/progress.offsetWidth));v.currentTime=s*v.duration;updateProgress(s*100);}};
-progress.onpointerup=e=>{e.preventDefault();e.stopPropagation();drag=false;safePlay();};
-v.ontimeupdate=()=>{if(!drag&&v.duration){updateProgress((v.currentTime/v.duration)*100);}};
+
+function getPosition(e){
+    const rect=progress.getBoundingClientRect();
+    const clientX=e.touches?e.touches[0].clientX:e.clientX;
+    let pos=(clientX-rect.left)/rect.width;
+    return Math.max(0,Math.min(1,pos));
+}
+
+progress.onpointerdown=e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    drag=true;
+    wasPlaying=!v.paused;
+    v.pause();
+    progress.setPointerCapture(e.pointerId);
+    let pos=getPosition(e);
+    if(v.duration){
+        v.currentTime=pos*v.duration;
+        updateProgressUI(pos*100,v.currentTime,v.duration);
+    }
+};
+
+progress.onpointermove=e=>{
+    if(!drag)return;
+    e.preventDefault();
+    e.stopPropagation();
+    let pos=getPosition(e);
+    if(v.duration){
+        v.currentTime=pos*v.duration;
+        updateProgressUI(pos*100,v.currentTime,v.duration);
+    }
+};
+
+progress.onpointerup=e=>{
+    if(!drag)return;
+    e.preventDefault();
+    e.stopPropagation();
+    drag=false;
+    try{progress.releasePointerCapture(e.pointerId);}catch(err){}
+    if(wasPlaying){safePlay();}
+};
+
+v.ontimeupdate=()=>{
+    if(!drag&&v.duration){
+        updateProgressUI((v.currentTime/v.duration)*100,v.currentTime,v.duration);
+    }
+};
+
+v.onloadedmetadata=()=>{
+    if(v.duration){
+        updateProgressUI(0,v.currentTime,v.duration);
+    }
+};
+
 v.onplay=()=>{playBtn.classList.add("pause");centerPlay.classList.add("hide");show();};
 v.onpause=()=>{playBtn.classList.remove("pause");centerPlay.classList.remove("hide");show(true);};
+
 player.onclick=e=>{e.preventDefault();if(tgPopup.style.display!=="none")return;if(e.target===v||e.target===player){if(controls.classList.contains("hide"))show();else{controls.classList.add("hide");settings.style.display="none";}}};
 </script>
 </body>
