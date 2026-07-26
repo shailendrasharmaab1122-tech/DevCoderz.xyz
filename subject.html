@@ -72,7 +72,7 @@
                 countBadge.innerText = `${items.length} Items`;
 
                 items.forEach(item => {
-                    const type = item.type; // 'folder' or 'file'
+                    const type = item.type;
                     const entityId = item.entity_id || (item.data && item.data.id);
                     const title = item.title || (item.data && item.data.title) || 'Untitled';
                     const thumbnail = (item.data && item.data.thumbnail) || 'https://via.placeholder.com/150';
@@ -83,7 +83,7 @@
                     if (type === 'folder') {
                         const counts = item.data && item.data.content_counts ? item.data.content_counts : null;
                         card.onclick = () => window.location.href = `subject.html?batchId=${batchId}&folderId=${entityId}&title=${encodeURIComponent(title)}`;
-                        
+
                         card.innerHTML = `
                             <div class="w-14 h-14 rounded-xl bg-amber-50 border border-amber-100 flex-shrink-0 flex items-center justify-center text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-all">
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
@@ -103,23 +103,18 @@
                             </div>
                         `;
                     } else if (type === 'file') {
-                        let videoUrl = '';
-                        try {
-                            const downloadUrls = JSON.parse(item.data.download_urls || '[]');
-                            if (downloadUrls.length > 0) {
-                                // Prefer 360p or 480p or pick the first available url
-                                const preferred = downloadUrls.find(u => u.title === '360p30' || u.title === '480p30') || downloadUrls[0];
-                                videoUrl = preferred.url;
-                            }
-                        } catch (err) {
-                            console.error("Error parsing download URLs", err);
-                        }
-
-                        card.onclick = () => {
-                            if (videoUrl) {
-                                window.location.href = `player.html?Url=${encodeURIComponent(videoUrl)}`;
-                            } else {
-                                alert("Video link not available.");
+                        card.onclick = async () => {
+                            try {
+                                const detailRes = await fetch(`https://api.thescholarverse.site/nexttoppers/course/content-details/${entityId}?course_id=${batchId}`);
+                                const detailJson = await detailRes.json();
+                                if (detailJson && detailJson.data && detailJson.data.decryptedData && detailJson.data.decryptedData.file_url) {
+                                    const fileUrl = detailJson.data.decryptedData.file_url;
+                                    window.location.href = `player.html?Url=${encodeURIComponent(fileUrl)}`;
+                                } else {
+                                    alert("Video link not available.");
+                                }
+                            } catch (err) {
+                                alert("Failed to fetch video details.");
                             }
                         };
 
