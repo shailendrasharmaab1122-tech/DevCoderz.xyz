@@ -94,7 +94,7 @@
 
             // Fetch Course Content / Subjects
             try {
-                const res = await fetch(`https://rolexcoderz.com/NT/content/api.php?course_id=${batchId}&action=content&rc=nt`);
+                const res = await fetch(`https://api.thescholarverse.site/nexttoppers/course/all-content/${batchId}?limit=1000`);
                 const json = await res.json();
                 const items = json.data || [];
                 const container = document.getElementById('subjectsContainer');
