@@ -108,8 +108,10 @@
                                 const detailRes = await fetch(`https://api.thescholarverse.site/nexttoppers/course/content-details/${entityId}?course_id=${batchId}`);
                                 const detailJson = await detailRes.json();
                                 
-                                if (detailJson && detailJson.data && detailJson.data.decryptedData && detailJson.data.decryptedData.file_url) {
-                                    const fileUrl = detailJson.data.decryptedData.file_url;
+                                // Updated check to match direct data.file_url format
+                                const fileUrl = detailJson?.data?.file_url || detailJson?.data?.decryptedData?.file_url;
+
+                                if (fileUrl) {
                                     window.location.href = `player.html?Url=${encodeURIComponent(fileUrl)}`;
                                 } else {
                                     alert("Video link not available.");
