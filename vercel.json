@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/hehe.js/:path*", "destination": "/api/hehe" }
+    { "source": "/hehe/:path*", "destination": "/api/hehe" }
   ]
 }
