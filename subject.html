@@ -103,32 +103,20 @@
                             </div>
                         `;
                     } else if (type === 'file') {
-                        card.onclick = () => {
+                        card.onclick = async () => {
                             try {
-                                const itemData = item.data || {};
-                                let videoUrl = '';
-
-                                if (itemData.file_url) {
-                                    videoUrl = itemData.file_url;
-                                } else if (itemData.download_urls) {
-                                    const urls = typeof itemData.download_urls === 'string' 
-                                        ? JSON.parse(itemData.download_urls) 
-                                        : itemData.download_urls;
-
-                                    if (urls && urls.length > 0) {
-                                        const preferred = urls.find(u => u.title.includes('720p')) || urls[0];
-                                        videoUrl = preferred.url;
-                                    }
-                                }
-
-                                if (videoUrl) {
-                                    window.location.href = `player.html?Url=${encodeURIComponent(videoUrl)}`;
+                                const detailRes = await fetch(`https://api.thescholarverse.site/nexttoppers/course/content-details/${entityId}?course_id=${batchId}`);
+                                const detailJson = await detailRes.json();
+                                
+                                if (detailJson && detailJson.data && detailJson.data.decryptedData && detailJson.data.decryptedData.file_url) {
+                                    const fileUrl = detailJson.data.decryptedData.file_url;
+                                    window.location.href = `player.html?Url=${encodeURIComponent(fileUrl)}`;
                                 } else {
                                     alert("Video link not available.");
                                 }
                             } catch (err) {
                                 console.error(err);
-                                alert("Failed to open video.");
+                                alert("Failed to fetch video details.");
                             }
                         };
 
