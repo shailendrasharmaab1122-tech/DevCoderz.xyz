@@ -102,7 +102,8 @@ async function initPlayer() {
     }
 
     if (videoUrl) {
-        if (Hls.isSupported()) {
+        // Check karo ki link m3u8 hai ya direct mp4 file
+        if (videoUrl.includes('.m3u8') && Hls.isSupported()) {
             hls = new Hls();
             hls.loadSource(videoUrl);
             hls.attachMedia(v);
@@ -113,8 +114,11 @@ async function initPlayer() {
             hls.on(Hls.Events.LEVEL_SWITCHED,(e,data)=>{
                 quality.value=data.level;
             });
-        } else if (v.canPlayType('application/vnd.apple.mpegurl')) {
+        } else {
+            // Agar mp4 ya direct video link hai toh seedha src me daal do
             v.src = videoUrl;
+            // Quality options hide kar do kyunki mp4 me quality switch nahi hoti
+            quality.parentElement.style.display = 'none';
         }
     }
 }
@@ -194,7 +198,7 @@ v.onloadedmetadata=()=>{
 };
 
 v.onplay=()=>{playBtn.classList.add("pause");centerPlay.classList.add("hide");show();};
-v.onpause=()=>{playBtn.classList.remove("pause");centerPlay.classList.remove("hide");show(true);};
+v.onpause=()=>{playBtn.classList.remove("pause");centerPlay.classList.add("hide");show(true);};
 
 player.onclick=e=>{e.preventDefault();if(tgPopup.style.display!=="none")return;if(e.target===v||e.target===player){if(controls.classList.contains("hide"))show();else{controls.classList.add("hide");settings.style.display="none";}}};
 </script>
