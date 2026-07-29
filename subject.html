@@ -105,7 +105,7 @@
                     } else if (type === 'file') {
                         card.onclick = async () => {
                             try {
-                                const detailRes = await fetch(`https://api.thescholarverse.site/nexttoppers/course/content-details/${entityId}?course_id=${batchId}`);
+                                const detailRes = await fetch(`https://devcoderz-ebon.vercel.app/api/hehe?path=course/content-details/${entityId}?course_id=${batchId}`);
                                 const detailJson = await detailRes.json();
                                 
                                 // Updated check to match direct data.file_url format
