@@ -56,7 +56,7 @@
             }
 
             try {
-                const res = await fetch(`https://devcoderz-ebon.vercel.app/api/hehe?path=course/all-content/${batchId}?limit=1000&folder_id=${folderId}`);
+                const res = await fetch(`https://devcoderz-ebon.vercel.app/api/hehe?path=course/all-content/${batchId}&limit=1000&folder_id=${folderId}`);
                 const json = await res.json();
                 const items = json.data || [];
                 const container = document.getElementById('contentContainer');
