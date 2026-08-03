@@ -105,13 +105,14 @@
                     } else if (type === 'file') {
                         card.onclick = async () => {
                             try {
-                                const detailRes = await fetch(`https://devcoderz-ebon.vercel.app/api/hehe?path=course/content-details/${entityId}?course_id=${batchId}`);
+                                const detailRes = await fetch(`https://devcoderzxvt.vercel.app/api/video?fetch_media=${entityId}&course_id=${batchId}`);
                                 const detailJson = await detailRes.json();
 
-                                const fileUrl = detailJson?.data?.file_url || detailJson?.data?.decryptedData?.file_url;
+                                const fileUrl = detailJson?.decryptedData?.file_url;
+                                const fileType = detailJson?.decryptedData?.file_type;
 
                                 if (fileUrl) {
-                                    if (fileUrl.toLowerCase().includes('.pdf') || detailJson?.data?.content_type === 'pdf' || detailJson?.data?.type === 'pdf') {
+                                    if (fileType === 1 || fileUrl.toLowerCase().includes('.pdf') || detailJson?.decryptedData?.content_type === 'pdf') {
                                         window.open(fileUrl, '_blank');
                                     } else {
                                         window.location.href = `player.html?Url=${encodeURIComponent(fileUrl)}`;
