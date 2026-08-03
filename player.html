@@ -91,7 +91,7 @@ async function initPlayer() {
         videoUrl = decodeURIComponent(rawUrl);
     } else {
         try {
-            const res = await fetch(`https://api.thescholarverse.site/nexttoppers/course/content-details/${contentId}?course_id=${courseId}`);
+            const res = await fetch(``);
             const json = await res.json();
             if (json && json.data && json.data.decryptedData) {
                 videoUrl = json.data.decryptedData.file_url;
