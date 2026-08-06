@@ -64,7 +64,7 @@
     <script>
         async function fetchCourses() {
             try {
-                const res = await fetch('https://devcoderz-ebon.vercel.app/api/hehe?path=course/all-course');
+                const res = await fetch('/api/hehe?path=course/all-course');
                 const json = await res.json();
                 const courseListObj = (json.data || []).find(item => item.layout_type === 'course_list_layout');
                 const courses = courseListObj ? courseListObj.list : [];
